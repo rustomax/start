@@ -17,7 +17,7 @@ int main()
 
     scanf("%d",&num );
 
-    printf("Original: %d\n",num)
+    printf("Original: %d\n",num);
 
     square_me(num);
 
