@@ -20,6 +20,13 @@ if (view_value == 5) {
     printf("you are standing in front of a stone door\n");
     printf("with two oddly shaped torches hung up beside it.\n");
 }
+if (view_value == 6) {
+    printf("There is a glass capsule in the center of the room containing a medicine bottle.\n");
+}
+if (view_value == 7) {
+    printf("You are standing in front of a large, glass capsule that spans the entire height of\n");
+    printf("the room. There is a medicine bottle sitting on the floor inside of the capsule.\n");
+}
 return 0;
 }
 bool forward (int f_value){
@@ -75,11 +82,10 @@ bool forward (int f_value){
             printf("just as the key breaks.\n");
             printf("as you walk into the next room you start to feel dizzy.\n");
             return confirm_return;
-
         }
         if (!strcmp (confirm3, "no") == 1){
             confirm_return = false;
-            printf("you leave the key alone.\n");
+            printf("you put the key back in you pocket.\n");
             return confirm_return;
         }
         else printf("invalid command\n");
@@ -97,12 +103,26 @@ bool forward (int f_value){
         confirm_return = false;
         return confirm_return;
     }
+    if (f_value == 6){
+        printf("you hear a deep voice inside your head:\n");
+        printf("Hey, can you hear me? I can see you are becoming very ill. Before you were\n");
+        printf("thrown in here you were injected with a deadly poision.\n");
+        printf("if you don't find an antidote soon you will die.\n");
+        return confirm_return;
+    }
+    if (f_value == 7){
+        printf("you walk up to the glass capsule in the center of the room and start to inspect it,\n");
+        printf("before jolting back from the same voice in your head:\n");
+        printf("Do you see the medicine bottle inside that container? Thats the antidote.\n");
+        printf("It's sealed off shut so you're going to need to solve a puzzle to open it. \n");
+        printf("the puzzle is on the back of the container.\n");
+        return confirm_return;
+        }
 }
 int main(void) {
     int view_value = 1;
     int forward_value = 1;
     int inventory_value = 0;
-    int lighter_value = 1;
     printf("What is your name?\n");
     char name[50];
     scanf("%s",name);
@@ -156,10 +176,19 @@ int main(void) {
             goto begining;
         }
         if (forward_value == 5){
-            printf("you use the lighter to light the torches and the door opens.\n");
+            printf("you use the lighter to light the torches and the door opens leading you to\n");
+            printf("the next room.\n");
             forward_value += 1;
             view_value += 1;
             inventory_value += 1;
+            goto begining;
+        }
+        if (forward_value == 6){
+            printf("you become amused by the sparks from the lighter.\n");
+            goto begining;
+        }
+        if (forward_value == 7){
+            printf("you become amused by the sparks from the lighter.\n");
             goto begining;
         }
     }
@@ -176,7 +205,7 @@ int main(void) {
             printf("lighter - a classic Zippo lighter\n");
             printf("---------------------------------------------\n");
         }
-        if (inventory_value == 1) {
+        if (inventory_value == 1){
             printf("---------------------------------------------\n");
             printf("lighter - a classic Zippo lighter\n");
             printf("---------------------------------------------\n");
@@ -187,12 +216,27 @@ int main(void) {
         printf("key - can be used to open certain locks\n");
         printf("-------------------------------------------------\n");
         }
-        if (inventory_value == 3) {
+        if (inventory_value == 3){
             printf("---------------------------------------------\n");
             printf("lighter - a classic Zippo lighter\n");
             printf("---------------------------------------------\n");
         }
-        if (inventory_value == 4) {
+        if (inventory_value == 4){
+            printf("---------------------------------------------\n");
+            printf("lighter - a classic Zippo lighter\n");
+            printf("---------------------------------------------\n");
+        }
+        if (inventory_value == 5){
+            printf("---------------------------------------------\n");
+            printf("lighter - a classic Zippo lighter\n");
+            printf("---------------------------------------------\n");
+        }
+        if (inventory_value == 6){
+            printf("---------------------------------------------\n");
+            printf("lighter - a classic Zippo lighter\n");
+            printf("---------------------------------------------\n");
+        }
+        if (inventory_value == 7){
             printf("---------------------------------------------\n");
             printf("lighter - a classic Zippo lighter\n");
             printf("---------------------------------------------\n");
@@ -201,3 +245,4 @@ int main(void) {
     else printf("invalid command\n");
         goto begining;
 }
+
