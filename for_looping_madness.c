@@ -1,9 +1,8 @@
 #include <stdio.h>
 
-int main (void){
-  int values [10];
-  for (int i = 0; i < 10; i++) {
-  values [10] = i + 1;
-}
-  printf("%d\n", values [10]);
+ int main (void)
+{
+    for (int i = 0; i <= 10; i++) {
+            printf("%d\n",i);
+    }
 }
