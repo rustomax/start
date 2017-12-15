@@ -82,3 +82,10 @@ int main(void) {
         }
     }
 }
+/*
+Things To do:
+1. use elsif
+2. use an array to store the player's location
+3. move print satements into a seperate function
+*/
+
