@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
-int SYN (int a){
+int SYN (void){
     system("cls");
     printf("A SYN packet is a special type of packet\n");
     printf("used by a node attempting to establish a secure \n");
@@ -30,6 +30,8 @@ int SYN (int a){
     printf("---       DATA     ---\n");
     printf("| |       --->     | |\n");
     printf("---                ---\n");
+    system("pause");
+    system ("cls");
     return 0;
 
 }
@@ -37,16 +39,21 @@ int SYN (int a){
 int main(void) {
     int usr;
     bool on = true;
-    printf("Welcome to the TCP/IP information hub.\n");
-    printf("Please select one of the options listed below.\n");
-    printf("----------------------------------------------\n");
-    printf("1.SYN/ACK\n");
     while (on == true){
+        printf("Welcome to the TCP/IP information hub.\n");
+        printf("Please select one of the options listed below.\n");
+        printf("----------------------------------------------\n");
+        printf("0.Exit\n");
+        printf("1.SYN/ACK\n");
         scanf("%d",&usr);
-        if (usr == 1) {
-            SYN (usr);
+        if (usr == 0) {
+            on = false;
+            system ("cls");
         }
-        if (usr != 1) {
+        if (usr == 1) {
+            SYN ();
+        }
+        if (usr != 0 && usr != 1) {
             printf("invalid option\n");
         }
     }
