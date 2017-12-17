@@ -12,7 +12,7 @@ int SYN (int a){
     printf("saying that it has recieved it's SYN.\n");
     printf("If A does not recieve an ACK it will continue\n");
     printf("to send SYN packets until it times out.\n");
-    printf("If however, A does recieve and ACK, then it will\n");
+    printf("If however, A does recieve an ACK, then it will\n");
     printf("begin sending informaton to node B\n");
     printf("This type of send and acknowledge system allows\n");
     printf("a secure connection between two nodes\n");
