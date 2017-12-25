@@ -27,65 +27,63 @@ int main(void) {
             printf("|  |\n");
             printf("----\n");
             co = 1;
-        };
-        if (co == 2 && !strcmp (usr, "north") == 1){
+        }
+        else if (co == 2 && !strcmp (usr, "north") == 1){
             printf("----\n");
             printf("| O|\n");
             printf("|  |\n");
             printf("----\n");
             co = 3;
-        };
-        if (co == 1 && !strcmp (usr, "south") == 1){
+        }
+        else if (co == 1 && !strcmp (usr, "south") == 1){
             printf("----\n");
             printf("|  |\n");
             printf("|O |\n");
             printf("----\n");
             co = 0;
-        };
-        if (co == 3 && !strcmp (usr, "south") == 1){
+        }
+        else if (co == 3 && !strcmp (usr, "south") == 1){
             printf("----\n");
             printf("|  |\n");
             printf("| O|\n");
             printf("----\n");
             co = 2;
-        };
-        if (co == 0 && !strcmp (usr, "east") == 1){
+        }
+        else if (co == 0 && !strcmp (usr, "east") == 1){
             printf("----\n");
             printf("|  |\n");
             printf("| O|\n");
             printf("----\n");
             co = 2;
-        };
-        if (co == 1 && !strcmp (usr, "east") == 1){
+        }
+        else if (co == 1 && !strcmp (usr, "east") == 1){
             printf("----\n");
             printf("| O|\n");
             printf("|  |\n");
             printf("----\n");
             co = 3;
-        };
-        if (co == 3 && !strcmp (usr, "west") == 1){
+        }
+        else if (co == 3 && !strcmp (usr, "west") == 1){
             printf("----\n");
             printf("|O |\n");
             printf("|  |\n");
             printf("----\n");
             co = 1;
-        };
-        if (co == 2 && !strcmp (usr, "west") == 1){
+        }
+        else if (co == 2 && !strcmp (usr, "west") == 1){
             printf("----\n");
             printf("|  |\n");
             printf("|O |\n");
             printf("----\n");
             co = 0;
-        };
-        if (!strcmp (usr, "exit") == 1){
+        }
+        else if (!strcmp (usr, "exit") == 1){
             game = false;
         }
     }
 }
 /*
-Things To do:
-1. use elsif
-2. use an array to store the player's location
-3. move print satements into a seperate function
+1. use else if: DONE
+2. use an array to store the player's location: INCOMPLETE
+3. move print satements into a seperate function: INCOMPLETE
 */
-
