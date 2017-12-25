@@ -66,9 +66,17 @@ int map_2_west (void){
     return 0;
 };
 int main(void) {
+    int grid[2][2] = {
+        {0, 0},
+        {1, 0}
+    };
+        /*
+        cordinates:
+        {[0][0], [0][1]}
+        {[1][0], [1][1]}
+        */
     char usr[10];
     bool game;
-    int co = 0;
     printf("use the commands north, south, east, or west to move.\n");
     printf("to exit type exit\n");
     printf("----\n");
@@ -76,45 +84,46 @@ int main(void) {
     printf("|O |\n");
     printf("----\n");
     while (game == true) {
-        /*
-         cordinates:
-           -----
-           |1,3|
-           |0,2|
-           -----
-        */
         scanf("%s",usr);
-        if  (co == 0 && !strcmp (usr, "north") == 1){
+        if  (grid[1][0] == 1 && !strcmp (usr, "north") == 1){
             map_0_north ();
-            co = 1;
+            grid[1][0] = 0;
+            grid[0][0] = 1;
         }
-        else if (co == 2 && !strcmp (usr, "north") == 1){
+        else if (grid[1][1] == 1 && !strcmp (usr, "north") == 1){
             map_2_north ();
-            co = 3;
+            grid[1][1] = 0;
+            grid[0][1] = 1;
         }
-        else if (co == 1 && !strcmp (usr, "south") == 1){
+        else if (grid[0][0] == 1 && !strcmp (usr, "south") == 1){
             map_1_south ();
-            co = 0;
+            grid[0][0] = 0;
+            grid[1][0] = 1;
         }
-        else if (co == 3 && !strcmp (usr, "south") == 1){
+        else if (grid[0][1] == 1 && !strcmp (usr, "south") == 1){
             map_3_south ();
-            co = 2;
+            grid[0][1] = 0;
+            grid[1][1] = 1;
         }
-        else if (co == 0 && !strcmp (usr, "east") == 1){
+        else if (grid[1][0] == 1 && !strcmp (usr, "east") == 1){
             map_0_east ();
-            co = 2;
+            grid[1][0] = 0;
+            grid[1][1] = 1;
         }
-        else if (co == 1 && !strcmp (usr, "east") == 1){
+        else if (grid[0][0] == 1 && !strcmp (usr, "east") == 1){
             map_1_east ();
-            co = 3;
+            grid[0][0] = 0;
+            grid[0][1] = 1;
         }
-        else if (co == 3 && !strcmp (usr, "west") == 1){
+        else if (grid[0][1] == 1 && !strcmp (usr, "west") == 1){
             map_3_west ();
-            co = 1;
+            grid[0][1] = 0;
+            grid[0][0] = 1;
         }
-        else if (co == 2 && !strcmp (usr, "west") == 1){
+        else if (grid[1][1] == 1 && !strcmp (usr, "west") == 1){
             map_2_west ();
-            co = 0;
+            grid[1][1] = 0;
+            grid[1][0] = 1;
         }
         else if (!strcmp (usr, "exit") == 1){
             game = false;
@@ -123,6 +132,6 @@ int main(void) {
 }
 /*
 1. use else if: DONE
-2. use an array to store the player's location: INCOMPLETE
+2. use an array to store the player's location: DONE
 3. move print satements into a seperate function: DONE
 */
