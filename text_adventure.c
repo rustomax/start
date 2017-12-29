@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+/*
+Sorry about all of the goto statements. I'll eventually get around to fixing those.
+*/
 int view (int view_value){
 if (view_value == 1) {
     printf("you are in a dim, seemingly empty room. You see lights shining out of the\n");
