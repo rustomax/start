@@ -4,7 +4,7 @@ int main(void) {
     int i, j, constant, first, last;
     printf("Welcome to the multiple finder!\n");
     printf("This program finds all of the multiples\n");
-    printf("between 2 numbers of your choice.\n");
+    printf("between a constant and 2 numbers of your choice.\n");
     printf("Please write a constant to be multiplied.\n");
     scanf("%d",&constant);
     printf("Please write the number to start at.\n");
