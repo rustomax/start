@@ -1,1 +1,2 @@
-# This repository is mainly used for storing all of my C programs.
+# start
+This is my repository where I store all of the C programs that have collected over time.
