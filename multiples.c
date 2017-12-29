@@ -1,5 +1,13 @@
 #include <stdio.h>
 
+int loop (int i, int j, int constant, int first, int last){
+    for (i = first; i <= last; i++) {
+        j = constant*i;
+        printf("%d\n", j);
+    }
+    return 0;
+}
+
 int main(void) {
     int i, j, constant, first, last;
     printf("Welcome to the multiple finder!\n");
@@ -12,9 +20,6 @@ int main(void) {
     printf("Please write the number to end at\n");
     scanf("%d",&last);
     printf("\n");
-    for (i = first; i <= last; i++) {
-        j = constant*i;
-        printf("%d\n", j);
-    }
+    loop(i, j, constant, first, last);
     system("pause");
 }
