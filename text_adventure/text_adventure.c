@@ -114,7 +114,7 @@ bool forward (int f_value){
         printf("you walk up to the glass capsule in the center of the room and start to inspect it,\n");
         printf("before jolting back from the same voice in your head:\n");
         printf("Do you see the medicine bottle inside that container? Thats the antidote.\n");
-        printf("It's sealed off shut so you're going to need to solve a puzzle to open it. \n");
+        printf("It's sealed shut so you're going to need to solve a puzzle to open it. \n");
         printf("the puzzle is on the back of the container.\n");
         return confirm_return;
         }
@@ -245,4 +245,3 @@ int main(void) {
     else printf("invalid command\n");
         goto begining;
 }
-

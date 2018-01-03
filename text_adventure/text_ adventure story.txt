@@ -1,0 +1,4 @@
+1st room: Wakes up in room with lighter.
+2nd room: unlocks the door with key.
+3rd room: lights torches to unlock door.
+4th room: unknown character tells you to find an antidote. (puzzle)

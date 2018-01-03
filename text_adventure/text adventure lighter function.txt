@@ -1,0 +1,21 @@
+bool lighter (int l_value){
+    if (l_value == 4){
+        char l_confirm[3];
+        bool confirm_return;
+        start4:
+        printf("would you like to use the lighter?\n");
+        scanf("%s",l_confirm);
+        if (!strcmp (l_confirm, "yes") == 1){
+            confirm_return = true;
+            printf("you light the torches on either side of the door and it suddenly opens.\n");
+        return confirm_return;
+        }
+        if (!strcmp (l_confirm, "no") == 1){
+            confirm_return = false;
+            printf("you put the lighter back in your pocket\n");
+        return confirm_return;
+        }
+        else printf("invalid command\n");
+        goto start4;
+    }
+}
