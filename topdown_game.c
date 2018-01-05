@@ -33,8 +33,8 @@ int main(void) {
   int y_alt;
   int room = 0;
   map[4][0] = 0;
-  // Value that changes the player's
   if (room == 0) {
+    // Value that changes the player's
     map[2][2] = 1;
     // position on the grid
     printf("Type 'help' for a list of commands.\n");
