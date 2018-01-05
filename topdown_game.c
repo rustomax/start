@@ -2,22 +2,28 @@
 #include <stdbool.h>
 #include <string.h>
 
-int loc_check (int map[5][5], int *ptr_return_x, int *ptr_return_y){
-  for (int x = 0; x < 5; x++) {
-      printf("---------------------\n");
+void loc_check (int room, int map[5][5], int *ptr_return_x, int *ptr_return_y){
+    for (int x = 0; x < 5; x++) {
+        printf("---------------------\n");
     for (int y = 0; y < 5; y++) {
-      printf("| ");
-      if (map[x][y] == 1) {
-        printf("O ");
-        *ptr_return_x = x;
-        *ptr_return_y = y;
-      }
-      else printf("  ");
+        printf("| ");
+        if (map[x][y] == 1) {
+            printf("O ");
+            *ptr_return_x = x;
+            *ptr_return_y = y;
+        }
+        else if (room == 0 && x == 0 && y == 2) {
+            printf("- ");
+        }
+        else if (room == 1 && x == 4 && y == 2) {
+            printf("- ");
+        }
+        else printf("  ");
     }
     printf("|\n---------------------\n");
-  }
-  return 0;
+    }
 }
+
 
 int main(void) {
   bool game = true;
@@ -25,12 +31,15 @@ int main(void) {
   int map[5][5];
   int x_alt;
   int y_alt;
+  int room = 0;
   map[4][0] = 0;
   // Value that changes the player's
-  map[0][0] = 1;
-  // position on the grid
-  printf("Type 'help' for a list of commands.\n");
-  printf("---------------------\n| O |   |   |   |   |\n---------------------\n---------------------\n|   |   |   |   |   |\n---------------------\n---------------------\n|   |   |   |   |   |\n---------------------\n---------------------\n|   |   |   |   |   |\n---------------------\n---------------------\n|   |   |   |   |   |\n---------------------\n");
+  if (room == 0) {
+    map[2][2] = 1;
+    // position on the grid
+    printf("Type 'help' for a list of commands.\n");
+    printf("---------------------\n|   |   | - |   |   |\n---------------------\n---------------------\n|   |   |   |   |   |\n---------------------\n---------------------\n|   |   | O |   |   |\n---------------------\n---------------------\n|   |   |   |   |   |\n---------------------\n---------------------\n|   |   |   |   |   |\n---------------------\n");
+  }
     /*
     ADDRESSES
     ----------------------------------------
@@ -54,6 +63,18 @@ int main(void) {
       scanf("%d",&x_alt);
       printf("Y = ");
       scanf("%d",&y_alt);
+      if (room == 0 && x_alt == 0 && y_alt == 2){
+          room = 1;
+          x_alt = 3;
+          y_alt = 2;
+          printf("You have moved to room 1\n");
+      }
+      else if (room == 1 && x_alt == 4 && y_alt == 2){
+           room = 0;
+           x_alt = 1;
+           y_alt = 2;
+           printf("You have moved to room 0\n");
+       }
       for (int x = 0; x < 5; x++) {
         for (int y = 0; y < 5; y++) {
           if (map[x][y] == 1) {
@@ -62,7 +83,8 @@ int main(void) {
         }
       }
       map[x_alt][y_alt] = 1;
-      loc_check (map, &x_alt, &y_alt);
+      printf("Room = %d\n", room);
+      loc_check (room, map, &x_alt, &y_alt);
       printf("X=%d , Y=%d\n",x_alt, y_alt);
     }
     else if (strcmp (usr, "help") == 0){
