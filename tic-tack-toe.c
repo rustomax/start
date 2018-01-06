@@ -112,10 +112,7 @@ int main(void) {
       printf("Tie!\n");
       return 0;
     }
-    printf("Cordinates ([X][Y])\n");
-    printf("[0][0],[0][1],[0][2]\n");
-    printf("[1][0],[1][1],[1][2]\n");
-    printf("[2][0],[2][1],[2][2]\n");
+    printf("Cordinates ([X][Y])\n[0][0],[0][1],[0][2]\n[1][0],[1][1],[1][2]\n[2][0],[2][1],[2][2]\n");
     printf("X = ");
     scanf("%d",&x_input);
     printf("Y = ");
