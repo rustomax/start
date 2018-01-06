@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void board_print (int player, int board[3][3]){
+void board_print (int board[3][3]){
   for (int x = 0; x < 3; x++) {
     printf("-------------\n");
     for (int y = 0; y < 3; y++) {
@@ -101,7 +101,8 @@ int main(void) {
   int board[3][3] = {0,0,0,0,0,0,0,0,0};
   int board_full = 0;
   printf("Welcome to Tic Tac Toe!\nType the value of a location to place a token there.\nFirst person to get three in a row wins.\nX goes first.\n");
-  board_print (player, board);
+  printf("player = %d\n",player );
+  board_print (board);
   while (game == true) {
     game = win_check (game, board);
     if (game == false) {
@@ -119,18 +120,21 @@ int main(void) {
     scanf("%d",&x_input);
     printf("Y = ");
     scanf("%d",&y_input);
-    printf("player = %d\n",player);
-    if (player == 1 && board[x_input][y_input] == 0) {
-      board[x_input][y_input] = 1;
-      board_full ++;
-      player = 2;
-    }
-    else if (player == 2 && board[x_input][y_input] == 0) {
-      board[x_input][y_input] = 2;
-      board_full ++;
-      player = 1;
+    if (x_input >= 0 && x_input <= 2 && y_input >= 0 && y_input <= 2) {
+      if (player == 1 && board[x_input][y_input] == 0) {
+        board[x_input][y_input] = 1;
+        board_full ++;
+        player = 2;
+      }
+      else if (player == 2 && board[x_input][y_input] == 0) {
+        board[x_input][y_input] = 2;
+        board_full ++;
+        player = 1;
+      }
+      else printf("Invalid Command\n");
     }
     else printf("Invalid Command\n");
-    board_print (player, board);
+    printf("player = %d\n",player);
+    board_print (board);
   }
 }
