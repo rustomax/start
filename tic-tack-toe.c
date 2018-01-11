@@ -50,7 +50,7 @@ int win_check (bool game, int board[3][3]){
     for (int y = 0; y < 3; y++) {
       if ((board[x][y] == 1 && board[x - 1][y + 1] == 1 && board[x + 1][y - 1] == 1) || (board[x][y] == 1 && board[x - 1][y - 1] == 1 && board[x + 1][y + 1] == 1)){
         if ((x + 1 <= 2 && x - 1 >= 0) && (y + 1 <= 2 && x - 1 >= 0)) {
-        printf("Player 2 wins with a diagonal strike!\n");
+        printf("Player 1 wins with a diagonal strike!\n");
         game = false;
         }
       }
