@@ -45,11 +45,9 @@ int main(void) {
           else if (usr == 'a'){
               board[x][y - 1] = 1;
           }
-//        Broken Code {
             else if (usr == 's'){
                 board[x + 1][y] = 1;
             }
-//        }
           else if (usr == 'd'){
               board[x][y + 1] = 1;
           }
