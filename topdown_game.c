@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
 
 void loc_check (int room, int map[5][5], int *ptr_return_x, int *ptr_return_y){
+    system("clear");
     for (int x = 0; x < 5; x++) {
         printf("---------------------\n");
     for (int y = 0; y < 5; y++) {

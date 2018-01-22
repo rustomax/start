@@ -66,10 +66,8 @@ int main(void) {
                         }
                         else board[x][y + 1] = 2;
                     }
-                    else {
-                        printf("Invalid Command!\n");
+                    else printf("Invalid Command!\n");
 
-                    }
                     board[x][y] = 1;
                     for (int alt_x = 0; alt_x < 10; alt_x++) {
                         for (int alt_y = 0; alt_y < 10; alt_y++) {
@@ -77,6 +75,12 @@ int main(void) {
                                 board[alt_x][alt_y] = 0;
                             }
                         }
+                    }
+                    if (board[x][y] == 1) {
+                      tail_val ++;
+                      if (tail_val == 1) {
+                        board[x][y] = 0;
+                      }
                     }
                     board_print (board);
                     printf("%d\n",board[1][1]);
