@@ -30,7 +30,7 @@ void board_print(int board[10][10], int room, bool print_true){
 int action (int board[10][10], int *room, int *alt_x,int *alt_y, char *direction, bool *print_true){
   char usr = 'a';
   bool found = false;
-  scanf("%s",&usr);
+  gets(&usr);
   for (int x = 0; x < 10 && !found; x++) {
     for (int y = 0; y < 10 && !found; y++) {
         if (board[x][y] == 1) {
@@ -79,8 +79,8 @@ int action (int board[10][10], int *room, int *alt_x,int *alt_y, char *direction
               if (room == 0){
                 *room = 3;
               }
-              board[x][y] = 0;
-              board[0][y] = 1;
+                board[x][y] = 0;
+                board[0][y] = 1;
             }
           }
           else if (usr == 'd'){
@@ -101,9 +101,6 @@ int action (int board[10][10], int *room, int *alt_x,int *alt_y, char *direction
           }
           if (board[x - 1][y] == 1 || board[x + 1][y] == 1 || board[x][y - 1] == 1 || board[x][y + 1] == 1) {
             board[x][y] = 0;
-          }
-          if ((board[x - 1][y] == 2 && usr == 'w') || (board[x + 1][y] == 2 && usr == 's') || (board[x][y - 1] == 2 && usr == 'a') || (board[x][y + 1] == 2 && usr == 'd')) {
-            *print_true = true;
           }
           *direction = usr;
         }
@@ -129,19 +126,59 @@ int main(void) {
   board[0][5] = 2;
   board_print(board, room, print_true);
   while (game == true) {
+    print_true = false;
+    if (room == 0) {
+      board[0][5] = 2;
+    }
+    else board[0][5] = 0;
     action (board, &room, &x, &y, &direction, &print_true);
     board[x][y] = 1;
-    if (direction == 'w' && board[x + 1][y] == 1){
-      board[x + 1][y] = 0;
+    if (direction == 'w'){
+      if (board[x + 1][y] == 1) {
+        board[x + 1][y] = 0;
+      }
+      if (room == 0 && board[9][y] == 1) {
+        room = 1;
+      }
+      if (board[9][y] == 1 && board[0][y] == 1) {
+        board[0][y] = 0;
+      }
     }
-    if (direction == 'a' && board[x][y + 1] == 1) {
+    if (direction == 'a') {
+      if (board[x][y + 1] == 1){
       board[x][y + 1] = 0;
+      }
+      if (room == 0 && board[x][9] == 1) {
+        room = 4;
+      }
+      if (board[x][9] == 1 && board[x][0] == 1) {
+        board[x][0] = 0;
+      }
     }
-    if (direction == 's' && board[x - 1][y] == 1) {
-      board[x - 1][y] = 0;
+    if (direction == 's') {
+      if (board[x - 1][y] == 1) {
+        board[x - 1][y] = 0;
+      }
+      if (room == 0 && board[0][y] == 1) {
+        room = 3;
+      }
+      if (board[0][y] == 1 && board[9][y] == 1) {
+        board[9][y] = 0;
+      }
     }
-    if (direction == 'd' && board[x][y - 1] == 1) {
-      board[x][y - 1] = 0;
+    if (direction == 'd') {
+      if (board[x][y - 1] == 1){
+        board[x][y - 1] = 0;
+      }
+      if (room == 0 && board[x][0] == 1) {
+        room = 2;
+      }
+      if (board[x][0] == 1 && board[x][9] == 1) {
+        board[x][9] = 0;
+      }
+    }
+    if (board[x - 1][y] == 2 || board[x + 1][y] == 2 || board[x][y - 1] == 2 || board[x][y + 1] == 2) {
+      print_true = true;
     }
     board_print(board, room, print_true);
   }
