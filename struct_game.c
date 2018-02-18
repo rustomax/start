@@ -1,24 +1,24 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 struct person {
   char *name;
   int age;
 };
 
-void startup (struct person player){
+void startup (struct person *player){
   bool setup = true;
   bool on = true;
   bool confirm;
   char input;
-  char player_name[32];
+  player->name = (char *) malloc (32 * sizeof(char));
   while (setup == true) {
     printf("Please input your name:\n");
     while (on == true) {
       confirm = true;
-      scanf("%s",player_name);
-      player.name = player_name;
-      printf("Do you want to be named %s? (Y/N)\n",player.name);
+      scanf("%s",player->name);
+      printf("Do you want to be named %s? (Y/N)\n",player->name);
       while (confirm == true) {
         scanf("%s",&input);
         if (input == 'y' || input == 'Y') {
@@ -34,8 +34,8 @@ void startup (struct person player){
     }
     confirm = true;
     printf("Please input your age:\n");
-    scanf("%d",&player.age);
-    printf("Does this look OK?\nName = %s\nAge = %d\n(y to continue n to redo startup)\n", player.name, player.age);
+    scanf("%d",&player->age);
+    printf("Does this look OK?\n\nName = %s\nAge = %d\n\n(y to continue n to redo startup)\n", player->name, player->age);
     while (confirm == true){
       scanf("%s",&input);
       if (input == 'y' || input == 'Y') {
@@ -43,7 +43,7 @@ void startup (struct person player){
         confirm = false;
         setup = false;
       }
-      if (input == 'n' || input == 'N') {
+      else if (input == 'n' || input == 'N') {
         confirm = false;
         on = true;
       }
@@ -54,5 +54,9 @@ void startup (struct person player){
 
 int main(void) {
   struct person player;
-  startup(player);
+  struct person *ptr_player = &player;
+  startup(ptr_player);
+  printf("\nPRINTED IN MAIN:\n\n");
+  printf("name = %s\nage = %d\n\n", player.name, player.age);
+  free(player.name);
 }
