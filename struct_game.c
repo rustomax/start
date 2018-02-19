@@ -98,7 +98,7 @@ void create_character (struct person *character){
 }
 
 void check_character_create (struct person *ptr_person1, struct person *ptr_person2, struct person *ptr_person3, int *person_count){
-  *person_count = *person_count + 1;
+  *person_count += 1;
   if (*person_count == 1) {
     create_character (ptr_person1);
   }
@@ -110,7 +110,7 @@ void check_character_create (struct person *ptr_person1, struct person *ptr_pers
   }
   if (*person_count == 4) {
     printf("You can only create three people.\n");
-    *person_count = *person_count - 1;
+    *person_count -= 1;
   }
 }
 
@@ -132,22 +132,41 @@ int view_characters (struct person person1, struct person person2, struct person
 
 void cleanup (struct person *player, struct person *person1, struct person *person2, struct person *person3, int person_count){
   free(player->name);
-  if (person_count == 1) {
+  if (person_count >= 1) {
     free(person1->name);
   }
-  if (person_count == 2) {
+  if (person_count >= 2) {
     free(person2->name);
   }
-  if (person_count == 3) {
+  if (person_count >= 3) {
     free(person3->name);
   }
 }
 
+bool exit_game (bool game){
+  char confirm;
+  bool exit = false;
+  printf("Are you sure you would like to exit the game? (Y/N)\n");
+  while (exit == false) {
+    scanf("%s",&confirm);
+    if (confirm == 'y' || confirm == 'Y') {
+      printf("As you wish.\n");
+      exit = true;
+      game = false;
+      return game;
+    }
+    else if (confirm == 'n' || confirm == 'N') {
+      exit = true;
+      game = true;
+    }
+    else printf("Please input y or n\n");
+  }
+  return game;
+}
+
 int main(void) {
   int usr;
-  char confirm;
   bool game = true;
-  bool exit = false;
   int person_count = 0;
   struct person person1;
   struct person person2;
@@ -156,7 +175,6 @@ int main(void) {
   struct person *ptr_player = &player;
   startup(ptr_player);
   while (game == true) {
-    exit = false;
     printf("\nName:%s\tAge:%d\n\nPeople Created = %d\n\nChoose an option:\n1.Create character\n2.Check character stats\n3.Buy item\n4.Quit game\n",player.name, player.age, person_count);
     scanf("%d",&usr);
     if (usr == 1) {
@@ -169,19 +187,7 @@ int main(void) {
       printf("Still in development!\n");
     }
     else if (usr == 4) {
-      printf("Are you sure you would like to exit the game? (Y/N)\n");
-      while (exit == false) {
-        scanf("%s",&confirm);
-        if (confirm == 'y' || confirm == 'Y') {
-          printf("As you wish.\n");
-          exit = true;
-          game = false;
-        }
-        else if (confirm == 'n' || confirm == 'N') {
-          exit = true;
-        }
-        else printf("Please input y or n\n");
-      }
+      game = exit_game (game);
     }
     else printf("Invalid option.\n");
   }
