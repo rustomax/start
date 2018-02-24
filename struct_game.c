@@ -166,35 +166,89 @@ int view_characters (struct person person1, struct person person2, struct person
   return 0;
 }
 
-void shop (struct person *player){
+void shop (struct person *player, struct items *player_items, char **item1_name, char **item2_name, char **item3_name){
   bool loop = true;
-  player->itemid = (char *) malloc (32 * sizeof(char));
-  char item1_name[11] = "flashlight";
-  char item2_name[8] = "handgun";
-  char item3_name[5] = "rock";
-  printf("\nPlease select an item to purchase:\n1.%s\n2.%s\n3.%s\n", item1_name, item2_name, item3_name);
+  bool buy_confirm;
+  *item1_name = (char *) malloc (32 * sizeof(char));
+  *item2_name = (char *) malloc (32 * sizeof(char));
+  *item3_name = (char *) malloc (32 * sizeof(char));
+  strncpy (*item1_name, "flashlight", 32);
+  strncpy (*item2_name, "handgun", 32);
+  strncpy (*item3_name, "rock", 32);
+  char item1_availibility[20];
+  char item2_availibility[20];
+  char item3_availibility[20];
   while (loop == true){
+    system("clear");
+    if (player_items->flashlight == false) {
+      strcpy(item1_availibility, "(availible)");
+    }
+    else if (player_items->flashlight == true){
+      strcpy(item1_availibility, "(sold)");
+    }
+    if (player_items->handgun == false) {
+      strcpy(item2_availibility, "(availible)");
+    }
+    else if (player_items->handgun == true){
+      strcpy(item2_availibility, "(sold)");
+    }
+    if (player_items->rock == false) {
+      strcpy(item3_availibility, "(availible)");
+    }
+    else if (player_items->flashlight == true){
+      strcpy(item3_availibility, "(sold)");
+    }
+    printf("\nPlease select an item to purchase:\n1.%s %s\n2.%s %s\n3.%s %s\n4.exit shop\n", *item1_name, item1_availibility, *item2_name, item2_availibility, *item3_name, item3_availibility);
+    buy_confirm = false;
     char usr;
     scanf("%s",&usr);
-    if (usr == '1') {
-       player->itemid = "flashlight";
-       loop = false;
+    if (usr == '1' && player_items->flashlight == false) {
+       player->itemid = *item1_name;
+       player_items->flashlight = true;
+       buy_confirm = true;
     }
-    else if (usr == '2') {
-      player->itemid = "handgun";
+    else if (usr == '2' && player_items->handgun == false) {
+      player->itemid = *item2_name;
+      player_items->handgun = true;
+      buy_confirm = true;
+    }
+    else if (usr == '3' && player_items->rock == false) {
+      player->itemid = *item3_name;
+      player_items->rock = true;
+      buy_confirm = true;
+    }
+    else if (usr == '4'){
       loop = false;
     }
-    else if (usr == '3') {
-      player->itemid = "rock";
-      loop = false;
+    else {
+      printf("Invalid selection\n");
+      system( "read -n 1 -s -p \"\nPress any key to continue...\"" );
     }
-    else printf("Invalid selection\n");
+    if ((usr == '1' && buy_confirm == true)|| (usr == '2' && buy_confirm == true) || (usr == '3' && buy_confirm == true)) {
+      printf("\nYou have purchased the %s\n",player->itemid);
+      system( "read -n 1 -s -p \"\nPress any key to continue...\"" );
+    }
   }
-  printf("\nYou have purchased the %s\n",player->itemid);
   system( "read -n 1 -s -p \"\nPress any key to return to the selection menu...\"" );
 }
 
-void cleanup (struct person *player, struct person *person1, struct person *person2, struct person *person3, int person_count){
+void check_inventory (char **item1_name, char **item2_name, char **item3_name, struct items player_items){
+  if (player_items.flashlight == true) {
+    printf("- %s\n",*item1_name);
+  }
+  if (player_items.handgun == true) {
+    printf("- %s\n",*item2_name);
+  }
+  if (player_items.rock == true) {
+    printf("- %s\n",*item3_name);
+  }
+  if (player_items.flashlight == false && player_items.handgun == false && player_items.rock == false) {
+    printf("No items availible.\n");
+  }
+  system( "read -n 1 -s -p \"\nPress any key to return to the selection menu...\"" );
+}
+
+void cleanup (struct person *player, struct person *person1, struct person *person2, struct person *person3, int person_count, char *item1_name, char *item2_name, char *item3_name){
   free(player->name);
   if (person_count >= 1) {
     free(person1->name);
@@ -205,6 +259,9 @@ void cleanup (struct person *player, struct person *person1, struct person *pers
   if (person_count >= 3) {
     free(person3->name);
   }
+  free(item1_name);
+  free(item2_name);
+  free(item3_name);
 }
 
 bool exit_game (bool game){
@@ -233,20 +290,27 @@ int main(void) {
   char usr;
   bool game = true;
   int person_count = 0;
+  struct items player_items;
+  player_items.flashlight = false;
+  player_items.handgun = false;
+  player_items.rock = false;
   struct person person1;
   struct person person2;
   struct person person3;
   struct person player;
   struct person *ptr_player = &player;
+  char *item1_name;
+  char *item2_name;
+  char *item3_name;
   char noitem[5] = "none";
   player.itemid = noitem;
   usr = '1';
   startup(ptr_player);
   system("clear");
   while (game == true) {
-    printf("___________________________________________________________________________\n");
+    printf("_________________________________________________________________________\n");
     printf("\nName:%s\tAge:%d\t  People Created = %d\tCurrent item = %s\n", player.name, player.age, person_count, player.itemid);
-    printf("___________________________________________________________________________\n");
+    printf("_________________________________________________________________________\n");
     printf("\nChoose an option:\n\n1.Create character\n2.Delete character\n3.Check character stats\n4.Buy item\n5.Check inventory\n6.Quit game\n");
     if (usr != '1' && usr != '2' && usr != '3' && usr != '4' && usr != '5' && usr != '6') {
       printf("\nInvalid option.\n\n");
@@ -264,16 +328,15 @@ int main(void) {
       view_characters(person1, person2, person3, person_count);
     }
     else if (usr == '4') {
-      shop (&player);
+      shop (&player, &player_items, &item1_name, &item2_name, &item3_name);
     }
     else if (usr == '5') {
-      printf("Under Development\n");
-      system( "read -n 1 -s -p \"\nPress any key to return to the selection menu...\"" );
+      check_inventory (&item1_name, &item2_name, &item3_name, player_items);
     }
     else if (usr == '6') {
       game = exit_game (game);
     }
     system ("clear");
   }
-  cleanup (&player, &person1, &person2, &person3, person_count);
+  cleanup (&player, &person1, &person2, &person3, person_count, item1_name, item2_name, item3_name);
 }
