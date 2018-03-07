@@ -195,7 +195,7 @@ void shop (struct person *player, struct items *player_items, char **item1_name,
     if (player_items->rock == false) {
       strcpy(item3_availibility, "(availible)");
     }
-    else if (player_items->flashlight == true){
+    else if (player_items->rock == true){
       strcpy(item3_availibility, "(sold)");
     }
     printf("\nPlease select an item to purchase:\n1.%s %s\n2.%s %s\n3.%s %s\n4.exit shop\n", *item1_name, item1_availibility, *item2_name, item2_availibility, *item3_name, item3_availibility);
@@ -246,6 +246,64 @@ void check_inventory (char **item1_name, char **item2_name, char **item3_name, s
     printf("No items availible.\n");
   }
   system( "read -n 1 -s -p \"\nPress any key to return to the selection menu...\"" );
+}
+
+void select_item (struct items player_items, struct person *player, char *item1_name, char *item2_name, char **item3_name){
+  char usr = '0';
+  printf("Please select an item:\n");
+  scanf("%s",&usr);
+  //CHECK:
+  *item3_name = (char *) malloc (32 * sizeof(char));
+  strncpy (*item3_name, "rock", 32);
+  //:CHECK
+  char *first_item = NULL;
+  char *second_item = NULL;
+  char *third_item = NULL;
+  for (int i = 0; i < 3; i++) {
+    if (player_items.flashlight == true) {
+      if (first_item == NULL) {
+        first_item = item1_name;
+      }
+      else if (second_item == NULL) {
+        second_item = item1_name;
+      }
+      else if (third_item == NULL) {
+        third_item = item1_name;
+      }
+    }
+    if (player_items.handgun == true) {
+      if (first_item == NULL) {
+        first_item = item2_name;
+      }
+      else if (second_item == NULL) {
+        second_item = item2_name;
+      }
+      else if (third_item == NULL) {
+        third_item = item2_name;
+      }
+    }
+    if (player_items.rock == true) {
+      if (first_item == NULL) {
+        first_item = *item3_name;
+      }
+      else if (second_item == NULL) {
+        second_item = *item3_name;
+      }
+      else if (third_item == NULL) {
+        third_item = *item3_name;
+      }
+    }
+  }
+  if (usr == '1' && player_items.flashlight == true) {
+    player->itemid = item1_name;
+  }
+  else if (usr == '2' && player_items.handgun == true) {
+    player->itemid = item2_name;
+  }
+  else if (usr == '3' && player_items.rock == true) {
+    player->itemid = *item3_name;
+  }
+  else printf("Invalid selection\n");
 }
 
 void cleanup (struct person *player, struct person *person1, struct person *person2, struct person *person3, int person_count, char *item1_name, char *item2_name, char *item3_name){
@@ -299,20 +357,21 @@ int main(void) {
   struct person person3;
   struct person player;
   struct person *ptr_player = &player;
-  char *item1_name;
-  char *item2_name;
-  char *item3_name;
+  char *item1_name = NULL;
+  char *item2_name = NULL;
+  char *item3_name = NULL;
   char noitem[5] = "none";
   player.itemid = noitem;
   usr = '1';
+  system("clear");
   startup(ptr_player);
   system("clear");
   while (game == true) {
     printf("_________________________________________________________________________\n");
     printf("\nName:%s\tAge:%d\t  People Created = %d\tCurrent item = %s\n", player.name, player.age, person_count, player.itemid);
     printf("_________________________________________________________________________\n");
-    printf("\nChoose an option:\n\n1.Create character\n2.Delete character\n3.Check character stats\n4.Buy item\n5.Check inventory\n6.Quit game\n");
-    if (usr != '1' && usr != '2' && usr != '3' && usr != '4' && usr != '5' && usr != '6') {
+    printf("\nChoose an option:\n\n1.Create character\n2.Delete character\n3.Check character stats\n4.Buy item\n5.Check inventory\n6.Select item\n7.Quit game\n");
+    if (usr != '1' && usr != '2' && usr != '3' && usr != '4' && usr != '5' && usr != '6' && usr != '7') {
       printf("\nInvalid option.\n\n");
     }
     scanf("%s",&usr);
@@ -334,6 +393,9 @@ int main(void) {
       check_inventory (&item1_name, &item2_name, &item3_name, player_items);
     }
     else if (usr == '6') {
+      select_item (player_items, &player, item1_name, item2_name, &item3_name);
+    }
+    else if (usr == '7') {
       game = exit_game (game);
     }
     system ("clear");
