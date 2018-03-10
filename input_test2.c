@@ -1,16 +1,11 @@
 #include <stdio.h>
 #include <ncurses.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 struct options {
-  //NAMES:
-  char *option1;
-  char *option2;
-  char *option3;
-  //PLAYER LOC:
-  bool position1;
-  bool position2;
-  bool position3;
+  char *option[3];
+  bool position[3];
 };
 
 void start_window(){
@@ -18,10 +13,12 @@ void start_window(){
   char walk[5] = "walk";
   char run[4] = "run";
   char hide[5] = "hide";
-  choices.option1 = walk;
-  choices.option2 = run;
-  choices.option3 = hide;
-  int positions[3] = {1,0,0};
+  choices.option[0] = walk;
+  choices.option[1] = run;
+  choices.option[2] = hide;
+  choices.position[0] = true;
+  choices.position[1] = false;
+  choices.position[2] = false;
   bool *print_true;
   char *option;
   int usr;
@@ -31,22 +28,23 @@ void start_window(){
   while (1) {
     //SECTION 1
     for (int i = 0; i < 3; i++) {
-      if (positions[i] == 1) {
+      if (choices.position[i] == 1) {
         usr = 0;
         while (usr == 0) {
           usr = getch();
-          if (usr == 'w' && positions[i] != 0) {
-            positions[i] = 0;
-            positions[i - 1] = 1;
+          if (usr == 'w') {
+            choices.position[i] = false;
+            choices.position[i - 1] = true;
           }
-          else if (usr == 's' && positions[i] != 2) {
-            positions[i] = 0;
-            positions[i + 1] = 1;
+          else if (usr == 's') {
+            choices.position[i] = false;
+            choices.position[i + 1] = true;
           }
         }
         break;
       }
     }
+    /*
     //SECTION 2
       for (int i = 0; i < 3; i++) {
         if (positions[i] == 1) {
@@ -65,28 +63,28 @@ void start_window(){
           break;
         }
       }
+    */
     //SECTION 3
     for (int i = 0; i < 3; i++) {
       if (i == 0) {
-        print_true = &choices.position1;
-        option = choices.option1;
+        print_true = &choices.position[0];
+        option = choices.option[0];
       }
       else if (i == 1) {
-        print_true = &choices.position2;
-        option = choices.option2;
+        print_true = &choices.position[1];
+        option = choices.option[1];
       }
       else if (i == 2) {
-        print_true = &choices.position3;
-        option = choices.option3;
+        print_true = &choices.position[2];
+        option = choices.option[2];
       }
       if (*print_true == true) {
         printw("-");
       }
       printw("%s\n",option);
     }
+    system("clear");
   }
-  endwin();
-  echo();
 }
 int main(void) {
   start_window();
