@@ -24,19 +24,19 @@ void start_window(){
   int usr;
   initscr();
   noecho();
-
+  curs_set(false);
+  printw("-%s\n%s\n%s",choices.option[0] ,choices.option[1] ,choices.option[2]);
   while (1) {
-    //SECTION 1
     for (int i = 0; i < 3; i++) {
       if (choices.position[i] == 1) {
         usr = 0;
         while (usr == 0) {
           usr = getch();
-          if (usr == 'w') {
+          if (usr == 'w' && choices.position[0] == false) {
             choices.position[i] = false;
             choices.position[i - 1] = true;
           }
-          else if (usr == 's') {
+          else if (usr == 's' && choices.position[2] == false) {
             choices.position[i] = false;
             choices.position[i + 1] = true;
           }
@@ -44,27 +44,8 @@ void start_window(){
         break;
       }
     }
-    /*
-    //SECTION 2
-      for (int i = 0; i < 3; i++) {
-        if (positions[i] == 1) {
-          choices.position1 = false;
-          choices.position2 = false;
-          choices.position3 = false;
-          if (positions[i] == 0) {
-            choices.position1 = true;
-          }
-          else if (positions[i] == 1) {
-            choices.position2 = true;
-          }
-          else if (positions[i] == 2) {
-            choices.position3 = true;
-          }
-          break;
-        }
-      }
-    */
-    //SECTION 3
+    clear ();
+    refresh ();
     for (int i = 0; i < 3; i++) {
       if (i == 0) {
         print_true = &choices.position[0];
@@ -83,7 +64,6 @@ void start_window(){
       }
       printw("%s\n",option);
     }
-    system("clear");
   }
 }
 int main(void) {
