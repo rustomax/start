@@ -3,6 +3,9 @@
 #include <unistd.h>
 #include <ncurses.h>
 
+#define BOARDX 48
+#define BOARDY 20
+
 void startup(void){
   char user;
   int inc = 0;
@@ -78,11 +81,134 @@ void startup(void){
       if (user == 'a' || user == 'A') break;
     }
     clear();
+    echo();
     endwin();
+}
+
+void lose(int board[BOARDX][BOARDY]){
+  for (int x = 0; x < BOARDX - 1; x++) {
+    for (int y = 0; y < BOARDY - 1; y++) {
+      if (board[x][y] == 1) {
+        mvprintw(y,x,"O");
+        usleep(10000);
+        mvprintw(y - 1,x,"|");
+        mvprintw(y + 1,x,"|");
+        mvprintw(y,x + 1,"-");
+        mvprintw(y,x - 1,"-");
+        mvprintw(y + 1,x + 1,"\\");
+        mvprintw(y + 1,x - 1,"/");
+        mvprintw(y - 1, x + 1,"/");
+        mvprintw(y - 1,x - 1,"\\");
+        refresh();
+        sleep(1);
+      }
+    }
+  }
+}
+
+void printboard(int board[BOARDX][BOARDY]) {
+  initscr();
+  noecho();
+  for (int x = 0; x < BOARDX - 1; x++) {
+    for (int y = 0; y < BOARDY - 1; y++) {
+      if (board[x][y] == 0) mvprintw(y,x,"#");
+      if (board[x][y] == 1) mvprintw(y,x,"O");
+      if (board[x][y] == 2) mvprintw(y,x,"+");
+    }
+    printw("\n");
+  }
+  refresh();
+}
+
+int game(void){
+  char user;
+  char direction = 'w';
+  int board[BOARDX][BOARDY];
+  for (int x = 0; x < BOARDX - 1; x++) {
+    for (int y = 0; y < BOARDY - 1; y++) {
+      board[x][y] = 0;
+    }
+  }
+  for (int x = 0; x < BOARDX - 1; x++) {
+    for (int y = 0; y < BOARDY - 1; y++) {
+      board[BOARDX - 1][y] = 2;
+      board[x][BOARDY - 1] = 2;
+    }
+  }
+  board[23][17] = 1;
+  nodelay(stdscr,true);
+  while (1) {
+    for (int x = 0; x < BOARDX - 1; x++) {
+      for (int y = 0; y < BOARDY - 1; y++) {
+        if (board[x][y] == 1) {
+          user = getch();
+          if (user == 'w' || user == 'a' || user == 's' || user == 'd') direction = user;
+          if (direction == 'w') board[x][y - 1] = 1;
+          if (direction == 'a') board[x - 1][y] = 1;
+          if (direction == 's'){
+            board[x][y + 1] = 1;
+            usleep(150000);
+          }
+          if (direction == 'd'){
+            board[x + 1][y] = 1;
+            usleep(150000);
+          }
+          if (direction == 'w' || direction == 'a' || direction == 's' || direction == 'd') board[x][y] = 2;
+          if ((direction == 'w' && board[x][y - 2] != 0) || (direction == 's' && board[x][y + 2] != 0) || (direction == 'd' && board[x + 2][y] != 0) || (direction == 'a' && board[x - 2][y] != 0)) {
+            lose(board);
+            clear();
+            return 0;
+          }
+        }
+        printboard(board);
+      }
+    }
+  }
+}
+
+void gameover(void){
+  int x = 0;
+  int y = 0;
+  int inc = 0;
+  while (y < 19) {
+    mvprintw(y,x, "#");
+    refresh();
+    usleep(1000);
+    x++;
+    if (x == 47){
+      y++;
+      x = 0;
+    }
+  }
+  while (inc < 10) {
+    inc ++;
+    if (inc == 1) mvprintw(10,18,"G");
+    if (inc == 2) mvprintw(10,19,"A");
+    if (inc == 3) mvprintw(10,20,"M");
+    if (inc == 4) mvprintw(10,21,"E");
+    if (inc == 5) mvprintw(10,22," ");
+    if (inc == 6) mvprintw(10,23,"O");
+    if (inc == 7) mvprintw(10,24,"V");
+    if (inc == 8) mvprintw(10,25,"E");
+    if (inc == 9) mvprintw(10,26,"R");
+    if (inc == 10) {
+    mvprintw(10,17,"|");
+    mvprintw(9,17,"-----------");
+    mvprintw(10,27,"|");
+    mvprintw(11,17,"-----------");
+    }
+    refresh();
+    usleep(100000);
+  }
+  system("read -n 1 -s -p \"\"");
+  echo();
+  endwin();
 }
 
 int main(void) {
   startup();
+  game();
+  gameover();
 }
 
 /*
