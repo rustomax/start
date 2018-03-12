@@ -167,41 +167,40 @@ int game(void){
 }
 
 void gameover(void){
-  int x = 0;
-  int y = 0;
-  int inc = 0;
-  while (y < 19) {
-    mvprintw(y,x, "#");
-    refresh();
-    usleep(1000);
-    x++;
-    if (x == 47){
-      y++;
-      x = 0;
-    }
+
+  // Print the field
+  for (int y = 0; y < 19; y++) {
+    for (int x = 0; x < 47; x++) {
+      mvprintw(y,x, "#");
+      refresh();
+      usleep(1000);      
+    }    
   }
-  while (inc < 10) {
-    inc ++;
-    if (inc == 1) mvprintw(10,18,"G");
-    if (inc == 2) mvprintw(10,19,"A");
-    if (inc == 3) mvprintw(10,20,"M");
-    if (inc == 4) mvprintw(10,21,"E");
-    if (inc == 5) mvprintw(10,22," ");
-    if (inc == 6) mvprintw(10,23,"O");
-    if (inc == 7) mvprintw(10,24,"V");
-    if (inc == 8) mvprintw(10,25,"E");
-    if (inc == 9) mvprintw(10,26,"R");
-    if (inc == 10) {
-    mvprintw(10,17,"|");
-    mvprintw(9,17,"-----------");
-    mvprintw(10,27,"|");
-    mvprintw(11,17,"-----------");
-    }
+
+  // Print "Game Over" message in a frame
+  int const go_len = 9;
+  char go_message[go_len] = "GAME OVER";
+  char go_char[2];
+  go_char[1] = '\0';
+
+  for (int i = 0; i < go_len; i++ ) {
+    go_char[0] = go_message[i];
+    mvprintw(10, 18 + i, go_char);
     refresh();
     usleep(100000);
   }
+
+  mvprintw(10,17,"|");
+  mvprintw(9,17,"-----------");
+  mvprintw(10,27,"|");
+  mvprintw(11,17,"-----------");
+  refresh();
+
+  // Wait for user to press a button
   system("read -n 1 -s -p \"\"");
   echo();
+
+  // clean up
   endwin();
 }
 
